@@ -1,0 +1,705 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #050505;
+  -webkit-text-size-adjust: 100%;
+  font-family: "Geom", sans-serif;
+}
+
+
+.page {
+  min-height: 100dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: url("worlds2.jpg") center / cover no-repeat;
+  padding-top: 90px;
+  padding-bottom: 0px;
+  color: white;
+}
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: linear-gradient(
+    90deg,
+    rgba(20, 0, 0, 0.85),
+    rgba(42, 0, 5, 0.9)
+  );
+  border-bottom: 1px solid rgba(147, 96, 0, 0.25);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  padding: 6px 40px;
+}
+
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.brand img {
+  width: 85px;
+}
+
+.divider {
+  width: 1px;
+  height: 70px;
+  background: rgb(147, 96, 0);
+}
+
+.logo-text {
+  font-size: 3.6rem;
+  font-weight: 300;
+  color: #560000;
+  text-shadow: 5px 5px 5px black;
+  transition: transform 0.25s ease, text-shadow 0.25s ease;
+}
+
+.regmark {
+  font-size: 1.5rem;
+  color: #560000;
+  margin-bottom: 22px;
+  margin-left: -24px;
+  transition: transform 0.25s ease;
+    text-shadow: 5px 5px 5px black;
+}
+
+.brand:hover .logo-text {
+  transform: scale(1);
+  text-shadow:
+    0 0 6px rgba(130,50,0,0.5),
+    0 0 14px rgba(130,50,0,0.4),
+    0 8px 24px rgba(0,0,0,0.9);
+}
+
+.brand:hover .regmark {
+  transform: scale(1);
+}
+
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.26rem;
+  margin-left: auto;
+  text-shadow: 5px 5px 5px black;
+}
+
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: rgb(147, 96, 0);
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: rgb(130, 50, 0);
+  box-shadow: 0 0 10px rgb(130, 50, 0);
+  transition: width 0.15s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: rgb(130, 50, 0);
+  text-shadow:
+    0 0 6px rgba(130, 50, 0, 0.5),
+    0 0 14px rgba(130, 50, 0, 0.6),
+    0 0 22px rgba(130, 50, 0, 0.4);
+}
+
+
+.hero {
+  min-height: calc(100dvh - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  font-size: clamp(3.2rem, 8vw, 5.8rem);
+  color: #740000;
+  text-shadow:
+    0 0 6px rgba(120,0,0,0.6),
+    0 0 18px rgba(80,0,0,0.5),
+    0 8px 24px rgba(0,0,0,0.9);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 1px;
+}
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.terminal-text {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.6px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 92vw;
+}
+
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.subtitle {
+  display: inline-block;
+  position: relative;
+  margin-top: 30px;
+  font-size: 2.2rem;
+  font-family: "JetBrains Mono", monospace;
+  color: rgb(111, 0, 0);
+  letter-spacing: 1.5px;
+  opacity: 0.85;
+  text-shadow:
+    0 2px 6px black,
+    0 10px 20px rgba(0,0,0,0.9),
+    0 0 12px rgba(0,0,0,0.6);
+}
+
+
+#subtitle {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+#subtitle.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.subtitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(130,50,0,0),
+    rgba(130,50,0,0.9),
+    rgba(130,50,0,0)
+  );
+  box-shadow: 0 0 14px rgba(130,50,0,0.8);
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.3s ease;
+}
+
+.subtitle.show::after {
+  transform: scaleX(1);
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+
+.footer-bar {
+    position: relative;
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+
+.footer-bar span {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.6px;
+}
+
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   ============================================ */
+
+/* Large Desktop (2560px ve altı) */
+@media (min-width: 1921px)
+{.nav-links {
+    gap: 100px !important;
+    padding-right: 50px !important;
+  }}
+
+/* Standard Desktop (1920px ve altı) */
+@media (max-width: 1920px) {
+      .navbar {
+        padding: 0.16rem 0px;
+    }
+  .logo-text {
+    font-size: 3.2rem;
+  }
+  
+  .brand img {
+    width: 70px;
+  }
+  
+  .divider {
+    height: 65px;
+  }
+  
+  .nav-links a {
+    font-size: 1.6rem;
+  }
+
+  
+  .regmark {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  
+  
+  .divider {
+    height: 60px;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    font-size: 1.5rem;
+  }
+  
+  .hero {
+    font-size: clamp(2.8rem, 7vw, 5rem);
+  }
+  
+  .subtitle {
+    font-size: 2rem;
+  }
+    .nav-links {
+    margin-left: 0 !important;     /* sağa iten şeyi öldür */
+    margin-top: 8px;
+    display: flex;
+    justify-content: right;       /* 👈 ORTALAMA */
+    width: 100%;
+    gap: 50px !important;
+  }
+}
+
+
+/* Laptop (1440px ve altı) */
+@media (max-width: 1440px) {
+  .nav-container {
+    padding: 5px 25px;
+  }
+  
+  .logo-text {
+    font-size: 2.6rem;
+  }
+  
+  .regmark {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    margin-left: -20px;
+  }
+  
+  .brand img {
+    width: 65px;
+  }
+  
+  .brand {
+    gap: 16px;
+  }
+  
+  .divider {
+    height: 55px;
+  }
+  
+  .nav-links a {
+    font-size: 1.4rem;
+  }
+  
+  .hero {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  
+  .subtitle {
+    font-size: 1.8rem;
+  }
+}
+
+/* Small Laptop (1280px ve altı) */
+@media (max-width: 1280px) {
+  .nav-container {
+    padding: 5px 20px;
+  }
+  
+  .logo-text {
+    font-size: 2.4rem;
+  }
+  
+  .regmark {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  
+  .brand img {
+    width: 60px;
+  }
+  
+  .divider {
+    height: 50px;
+  }
+  
+  .nav-links {
+    gap: 0.9rem;
+  }
+  
+  .nav-links a {
+    font-size: 1.3rem;
+  }
+  
+  .subtitle {
+    font-size: 1.6rem;
+  }
+}
+
+/* Tablet Landscape (1024px ve altı) */
+@media (max-width: 1024px) {
+  .nav-container {
+    padding: 5px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .brand {
+    gap: 14px;
+  }
+  
+  .logo-text {
+    font-size: 2.2rem;
+  }
+  
+  .regmark {
+    font-size: 1rem;
+    margin-bottom: 14px;
+    margin-left: -18px;
+  }
+  
+  .brand img {
+    width: 55px;
+  }
+  
+  .divider {
+    height: 45px;
+  }
+  
+  .nav-links {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+  
+  .hero {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    padding: 0 20px;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    padding: 0 20px;
+  }
+  
+  .footer-bar {
+    height: 44px;
+  }
+  
+  .footer-bar span {
+    font-size: 1.1rem;
+  }
+}
+
+/* Tablet Portrait (768px ve altı) */
+@media (max-width: 768px) {
+  .page {
+    padding-top: 110px;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+    padding: 12px 15px;
+    gap: 12px;
+  }
+  
+  .brand {
+    gap: 12px;
+  }
+  
+  .logo-text {
+    font-size: 2rem;
+  }
+  
+  .regmark {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    margin-left: -16px;
+  }
+  
+  .brand img {
+    width: 50px;
+  }
+  
+  .divider {
+    height: 40px;
+  }
+  
+  .nav-links {
+    margin-left: 0;
+    gap: 0.7rem;
+  }
+  
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+  
+  .hero {
+    min-height: calc(100dvh - 150px);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    gap: 12px;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+  
+  .footer-bar {
+    height: 40px;
+  }
+  
+  .footer-bar span {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile Large (640px ve altı) */
+@media (max-width: 640px) {
+  .page {
+    padding-top: 120px;
+  }
+  
+  .nav-container {
+    padding: 10px 12px;
+  }
+  
+  .brand {
+    gap: 10px;
+  }
+  
+  .logo-text {
+    font-size: 1.8rem;
+  }
+  
+  .regmark {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    margin-left: -14px;
+  }
+  
+  .brand img {
+    width: 45px;
+  }
+  
+  .divider {
+    height: 35px;
+  }
+  
+  .nav-links {
+    gap: 0.6rem;
+  }
+  
+  .nav-links a {
+    font-size: 1rem;
+  }
+  
+  .hero {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    gap: 10px;
+    padding: 0 15px;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    margin-top: 18px;
+  }
+  
+  .subtitle::after {
+    bottom: -8px;
+  }
+}
+
+/* Mobile Medium (480px ve altı) */
+@media (max-width: 480px) {
+  .page {
+    padding-top: 130px;
+  }
+  
+  .nav-container {
+    padding: 8px 10px;
+  }
+  
+  .brand {
+    gap: 8px;
+  }
+  
+  .logo-text {
+    font-size: 1.6rem;
+  }
+  
+  .regmark {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+    margin-left: -12px;
+  }
+  
+  .brand img {
+    width: 40px;
+  }
+  
+  .divider {
+    height: 32px;
+  }
+  
+   .nav-links {
+    gap: 3.1rem !important;
+    justify-content: center;
+    width: 100%;
+    margin-left: 0px !important;
+  }
+  
+  .nav-links a {
+    font-size: 0.95rem;
+  }
+  
+  .nav-links a::after {
+    bottom: -4px;
+  }
+  
+  .hero {
+    font-size: clamp(2.5rem, 8vw, 2.5rem);
+    gap: 1px;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    margin-top: 15px;
+    letter-spacing: 1px;
+  }
+  
+  .footer-bar {
+    height: 36px;
+  }
+  
+  .footer-bar span {
+    font-size: 1rem;
+
+  }
+}
+
+/* Mobile Small (375px ve altı) */
+@media (max-width: 375px) {
+  .page {
+    padding-top: 140px;
+  }
+  
+  .nav-container {
+    padding: 8px 8px;
+  }
+  
+  .brand {
+    gap: 6px;
+  }
+  
+  .logo-text {
+    font-size: 1.4rem;
+  }
+  
+  .regmark {
+    font-size: 0.65rem;
+    margin-bottom: 6px;
+    margin-left: -10px;
+  }
+  
+  .brand img {
+    width: 35px;
+  }
+  
+  .divider {
+    height: 28px;
+  }
+  
+  .nav-links {
+    gap: 0.4rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+  
+  .hero {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    gap: 6px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    margin-top: 12px;
+  }
+  
+  .footer-bar span {
+    font-size: 0.85rem;
+  }
+}
